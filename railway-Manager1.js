@@ -221,40 +221,7 @@ do {
     });
 
     break;
-        case 2:
-            console.log("Acheter un ticket");
-        
 
-
-
-            break;
-
-        case 3:
-            console.log("Afficher les tickets");
-            break;
-
-        case 4:
-            console.log("Annuler un ticket");
-            break;
-
-        case 5:
-            console.log("Rechercher un ticket");
-            break;
-
-        case 6:
-            console.log("Filtrer les trajets");
-            break;
-
-        case 7:
-            console.log("Trier les trajets");
-            break;
-
-        case 0:
-            console.log("Au revoir !");
-            break;
-
-        default:
-            console.log("Choix invalide !");
     }
 
 } while (choix !== 0);
