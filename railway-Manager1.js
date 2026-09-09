@@ -1,4 +1,3 @@
-
 const prompt = require("prompt-sync")();
 
 const trips = [
@@ -183,11 +182,15 @@ const trips = [
         availableSeats: 50
     }
 ]
+
+
 let choix;
+
 do {
-    console.log("==============================");
-    console.log("       RAILWAY MANAGER       ");
-    console.log("==============================");
+
+    console.log("=================================");
+    console.log("        RAILWAY MANAGER");
+    console.log("=================================");
     console.log("1. Afficher les trajets");
     console.log("2. Acheter un ticket");
     console.log("3. Afficher les tickets");
@@ -196,7 +199,62 @@ do {
     console.log("6. Filtrer les trajets");
     console.log("7. Trier les trajets");
     console.log("0. Quitter");
-    choix = Number(prompt("Votre choix : "));
-    console.log(choix);
-}while (choix !== 0);
 
+    choix = Number(prompt("Votre choix : "));
+
+    switch (choix) {
+
+
+     case 1:
+
+    console.log("===== TRAJETS DISPONIBLES =====");
+
+    trips.forEach(trajet => {
+        
+        console.log(`#${trajet.id} ${trajet.departure} → ${trajet.destination}`);
+        console.log(`Départ : ${trajet.departureTime}`);
+        console.log(`Arrivée : ${trajet.arrivalTime}`);
+        console.log(`Prix : ${trajet.price} DH`);
+        console.log(`Places disponibles : ${trajet.availableSeats}`);
+        console.log("========================================");
+
+    });
+
+    break;
+        case 2:
+            console.log("Acheter un ticket");
+        
+
+
+
+            break;
+
+        case 3:
+            console.log("Afficher les tickets");
+            break;
+
+        case 4:
+            console.log("Annuler un ticket");
+            break;
+
+        case 5:
+            console.log("Rechercher un ticket");
+            break;
+
+        case 6:
+            console.log("Filtrer les trajets");
+            break;
+
+        case 7:
+            console.log("Trier les trajets");
+            break;
+
+        case 0:
+            console.log("Au revoir !");
+            break;
+
+        default:
+            console.log("Choix invalide !");
+    }
+
+} while (choix !== 0);
