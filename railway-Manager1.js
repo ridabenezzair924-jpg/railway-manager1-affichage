@@ -182,7 +182,7 @@ const trips = [
         availableSeats: 50
     }
 ]
-
+const tickets = [];
 
 let choix;
 
@@ -204,9 +204,8 @@ do {
 
     switch (choix) {
 
-
      case 1:
-
+        
     console.log("===== TRAJETS DISPONIBLES =====");
 
     trips.forEach(trajet => {
@@ -221,7 +220,59 @@ do {
     });
 
     break;
+case 2:
 
+    let passengerName = prompt("Nom du passager : ");
+    let tripId = Number(prompt("ID du trajet : "));
+
+    let trip;
+
+    for (let i = 0; i < trips.length; i++) {
+        if (trips[i].id === tripId) {
+            trip = trips[i];
+            break;
+        }
     }
 
-} while (choix !== 0);
+    if (!trip) {
+        console.log("Trajet introuvable.");
+        break;
+    }
+
+    if (trip.availableSeats === 0) {
+        console.log("Train complet.");
+        break;
+    }
+
+    let seatNumber = 1;
+
+    for (let i = 0; i < tickets.length; i++) {
+        if (tickets[i].tripId === tripId) {
+            seatNumber++;
+        }
+    }
+
+    let ticket = {
+        id: tickets.length + 1,
+        passengerName: passengerName,
+        tripId: tripId,
+        seatNumber: seatNumber,
+        price: trip.price
+    };
+
+    tickets.push(ticket);
+
+    trip.availableSeats--;
+
+    console.log("Ticket #" + ticket.id);
+    console.log("Passager : " + ticket.passengerName);
+    console.log("Trajet ID : " + ticket.tripId);
+    console.log("Place : " + ticket.seatNumber);
+    
+    
+    console.log("Prix : " + ticket.price + " DH");
+
+    break;
+    }
+}while (choix !== 0);
+    
