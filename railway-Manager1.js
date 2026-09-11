@@ -264,7 +264,7 @@ case 2:
 
     trip.availableSeats--;
 
-    console.log("Ticket #" + ticket.id);
+    console.log("Ticket : #" + ticket.id);
     console.log("Passager : " + ticket.passengerName);
     console.log("Trajet ID : " + ticket.tripId);
     console.log("Place : " + ticket.seatNumber);
@@ -273,6 +273,36 @@ case 2:
     console.log("Prix : " + ticket.price + " DH");
 
     break;
+    case 3:
+
+    if (tickets.length === 0) {
+        console.log("Aucun ticket enregistré.");
+        break;
     }
+
+    for (let i = 0; i < tickets.length; i++) {
+
+        let ticket = tickets[i];
+        let trip;
+
+        // chercher le trajet du ticket
+        for (let j = 0; j < trips.length; j++) {
+            if (trips[j].id === ticket.tripId) {
+                trip = trips[j];
+                break;
+            }
+        }
+
+        console.log("Ticket #" + ticket.id);
+        console.log("Passager : " + ticket.passengerName);
+        console.log("Trajet : " + trip.departure + " → " + trip.destination);
+        console.log("Place : " + ticket.seatNumber);
+        console.log("Prix : " + ticket.price + " DH");
+        console.log("=================================");
+    }
+
+    break;
+}
+
 }while (choix !== 0);
     
