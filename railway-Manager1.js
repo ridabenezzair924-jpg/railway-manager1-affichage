@@ -1,4 +1,6 @@
+
 const prompt = require("prompt-sync")();
+
 const trips = [
     {
         id: 1,
@@ -35,6 +37,443 @@ const trips = [
         arrivalTime: "11:00",
         price: 65,
         availableSeats: 50
+    },
+    {
+        id: 5,
+        departure: "Youssoufia",
+        destination: "Casablanca",
+        departureTime: "10:00",
+        arrivalTime: "13:30",
+        price: 110,
+        availableSeats: 50
+    },
+    {
+        id: 6,
+        departure: "Marrakech",
+        destination: "Casablanca",
+        departureTime: "11:30",
+        arrivalTime: "14:30",
+        price: 120,
+        availableSeats: 50
+    },
+    {
+        id: 7,
+        departure: "Marrakech",
+        destination: "Rabat",
+        departureTime: "12:00",
+        arrivalTime: "16:00",
+        price: 150,
+        availableSeats: 50
+    },
+    {
+        id: 8,
+        departure: "Casablanca",
+        destination: "Rabat",
+        departureTime: "14:00",
+        arrivalTime: "15:15",
+        price: 40,
+        availableSeats: 50
+    },
+    {
+        id: 9,
+        departure: "Casablanca",
+        destination: "Kenitra",
+        departureTime: "15:00",
+        arrivalTime: "16:45",
+        price: 55,
+        availableSeats: 50
+    },
+    {
+        id: 10,
+        departure: "Rabat",
+        destination: "Kenitra",
+        departureTime: "16:00",
+        arrivalTime: "16:45",
+        price: 30,
+        availableSeats: 50
+    },
+    {
+        id: 11,
+        departure: "Rabat",
+        destination: "Fes",
+        departureTime: "17:00",
+        arrivalTime: "19:30",
+        price: 95,
+        availableSeats: 50
+    },
+    {
+        id: 12,
+        departure: "Kenitra",
+        destination: "Fes",
+        departureTime: "17:30",
+        arrivalTime: "20:00",
+        price: 85,
+        availableSeats: 50
+    },
+    {
+        id: 13,
+        departure: "Fes",
+        destination: "Meknes",
+        departureTime: "08:30",
+        arrivalTime: "09:20",
+        price: 35,
+        availableSeats: 50
+    },
+    {
+        id: 14,
+        departure: "Fes",
+        destination: "Oujda",
+        departureTime: "10:00",
+        arrivalTime: "13:30",
+        price: 130,
+        availableSeats: 50
+    },
+    {
+        id: 15,
+        departure: "Meknes",
+        destination: "Rabat",
+        departureTime: "11:00",
+        arrivalTime: "13:30",
+        price: 80,
+        availableSeats: 50
+    },
+    {
+        id: 16,
+        departure: "Meknes",
+        destination: "Casablanca",
+        departureTime: "12:00",
+        arrivalTime: "15:00",
+        price: 105,
+        availableSeats: 50
+    },
+    {
+        id: 17,
+        departure: "Casablanca",
+        destination: "El Jadida",
+        departureTime: "16:30",
+        arrivalTime: "18:00",
+        price: 50,
+        availableSeats: 50
+    },
+    {
+        id: 18,
+        departure: "El Jadida",
+        destination: "Safi",
+        departureTime: "18:30",
+        arrivalTime: "20:30",
+        price: 60,
+        availableSeats: 50
+    },
+    {
+        id: 19,
+        departure: "Marrakech",
+        destination: "Agadir",
+        departureTime: "15:00",
+        arrivalTime: "18:30",
+        price: 100,
+        availableSeats: 50
+    },
+    {
+        id: 20,
+        departure: "Agadir",
+        destination: "Safi",
+        departureTime: "19:00",
+        arrivalTime: "22:00",
+        price: 95,
+        availableSeats: 50
+    }
+];
+
+const tickets = [];
+
+let ticketId = 1;
+
+let choix;
+
+do {
+
+    console.log("=================================");
+    console.log("        RAILWAY MANAGER");
+    console.log("=================================");
+    console.log("1. Afficher les trajets");
+    console.log("2. Acheter un ticket");
+    console.log("3. Afficher les tickets");
+    console.log("4. Annuler un ticket");
+    console.log("5. Rechercher un ticket");
+    console.log("6. Filtrer les trajets");
+    console.log("7. Trier les trajets");
+    console.log("0. Quitter");
+
+    choix = Number(prompt("Votre choix : "));
+
+    switch (choix) {
+
+        case 1:
+
+            console.log("===== TRAJETS DISPONIBLES =====");
+
+            trips.forEach(trajet => {
+
+                console.log(
+                    `#${trajet.id} ${trajet.departure} → ${trajet.destination}`
+                );
+
+                console.log(`Départ : ${trajet.departureTime}`);
+                console.log(`Arrivée : ${trajet.arrivalTime}`);
+                console.log(`Prix : ${trajet.price} DH`);
+                console.log(`Places disponibles : ${trajet.availableSeats}`);
+                console.log("========================================");
+
+            });
+
+            break;
+
+        case 2:
+
+            let passengerName = prompt("Nom du passager : ");
+            let tripId = Number(prompt("ID du trajet : "));
+
+            let trip;
+
+            for (let i = 0; i < trips.length; i++) {
+
+                if (trips[i].id === tripId) {
+                    trip = trips[i];
+                    break;
+                }
+
+            }
+
+            if (!trip) {
+                console.log("Trajet introuvable.");
+                break;
+            }
+
+            if (trip.availableSeats === 0) {
+                console.log("Train complet.");
+                break;
+            }
+
+            let seatNumber = 1;
+
+            while (true) {
+
+                let placeOccupee = false;
+
+                for (let i = 0; i < tickets.length; i++) {
+
+                    if (
+                        tickets[i].tripId === tripId &&
+                        tickets[i].seatNumber === seatNumber
+                    ) {
+                        placeOccupee = true;
+                        break;
+                    }
+                }
+
+                if (!placeOccupee) {
+                    break;
+                }
+
+                seatNumber++;
+            }
+            let ticket = {
+                id: ticketId,
+                passengerName: passengerName,
+                tripId: tripId,
+                seatNumber: seatNumber,
+                price: trip.price
+            };
+
+            ticketId++;
+
+            tickets.push(ticket);
+
+            trip.availableSeats--;
+
+            console.log("Ticket : #" + ticket.id);
+            console.log("Passager : " + ticket.passengerName);
+            console.log("Trajet ID : " + ticket.tripId);
+            console.log("Place : " + ticket.seatNumber);
+            console.log("Prix : " + ticket.price + " DH");
+            console.log("==============================");
+
+            break;
+
+        case 3:
+
+            if (tickets.length === 0) {
+                console.log("Aucun ticket enregistré.");
+                break;
+            }
+
+            for (let i = 0; i < tickets.length; i++) {
+
+                let ticket = tickets[i];
+                let trip;
+
+                for (let j = 0; j < trips.length; j++) {
+
+                    if (trips[j].id === ticket.tripId) {
+                        trip = trips[j];
+                        break;
+                    }
+
+                }
+
+                console.log("Ticket #" + ticket.id);
+                console.log("Passager : " + ticket.passengerName);
+                console.log(
+                    "Trajet : " +
+                    trip.departure +
+                    " → " +
+                    trip.destination
+                );
+                console.log("Place : " + ticket.seatNumber);
+                console.log("Prix : " + ticket.price + " DH");
+                console.log("=================================");
+
+            }
+
+            break;
+
+        case 4:
+
+            let ticketIdAnnule = Number(prompt("ID du ticket : "));
+
+            let ticketIndex = -1;
+
+            for (let i = 0; i < tickets.length; i++) {
+
+                if (tickets[i].id === ticketIdAnnule) {
+                    ticketIndex = i;
+                    break;
+                }
+
+            }
+
+            if (ticketIndex === -1) {
+                console.log("Ticket introuvable.");
+                break;
+            }
+
+            let ticketAnnule = tickets[ticketIndex];
+
+            for (let i = 0; i < trips.length; i++) {
+
+                if (trips[i].id === ticketAnnule.tripId) {
+
+                    trips[i].availableSeats++;
+                    break;
+
+                }
+
+            }
+
+            tickets.splice(ticketIndex, 1);
+
+            console.log("Ticket annulé avec succès.");
+
+            break;
+
+        case 5:
+
+            let nomRecherche = prompt("Nom du passager : ");
+
+            let ticketTrouve = false;
+
+            for (let i = 0; i < tickets.length; i++) {
+
+                if (
+                    tickets[i].passengerName.toLowerCase() ===
+                    nomRecherche.toLowerCase()
+                ) {
+
+                    console.log("Ticket #" + tickets[i].id);
+                    console.log(
+                        "Passager : " +
+                        tickets[i].passengerName
+                    );
+                    console.log(
+                        "Trajet ID : " +
+                        tickets[i].tripId
+                    );
+                    console.log(
+                        "Place : " +
+                        tickets[i].seatNumber
+                    );
+                    console.log(
+                        "Prix : " +
+                        tickets[i].price +
+                        " DH"
+                    );
+                    console.log("=================================");
+
+                    ticketTrouve = true;
+
+                }
+            }
+            if (!ticketTrouve) {
+                console.log("Aucun ticket trouvé.");
+            }
+            break;
+        case 6:
+            let villeDepart = prompt("Ville de départ : ");
+            let trajetTrouve = false;
+            for (let i = 0; i < trips.length; i++) {
+                if (
+                    trips[i].departure.toLowerCase() ===
+                    villeDepart.toLowerCase()
+                ) {
+                    console.log(
+                        "#" +
+                        trips[i].id +
+                        " " +
+                        trips[i].departure +
+                        " → " +
+                        trips[i].destination
+                    );
+                    console.log(
+                        "Prix : " +
+                        trips[i].price +
+                        " DH"
+                    );
+                    console.log("=================================");
+                    trajetTrouve = true;
+                }
+            }
+            if (!trajetTrouve) {
+                console.log("Aucun trajet trouvé.");
+            }
+            break;
+        case 7:
+            for (let i = 0; i < trips.length; i++) {
+                for (let j = 0; j < trips.length - 1 - i; j++) {
+                    if (trips[j].price > trips[j + 1].price) {
+                        let temp = trips[j];
+                        trips[j] = trips[j + 1];
+                        trips[j + 1] = temp;
+                    }
+
+                }
+            }
+            console.log("===== TRAJETS TRIÉS PAR PRIX =====");
+            for (let i = 0; i < trips.length; i++) {
+                console.log(
+                    "#" +
+                    trips[i].id +
+                    " " +
+                    trips[i].departure +
+                    " → " +
+                    trips[i].destination +
+                    " | Prix : " +
+                    trips[i].price +
+                    " DH"
+                );
+            }
+            break;
+    }
+} while (choix !== 0);        availableSeats: 50
     },
     {
         id: 5,
